@@ -11,6 +11,8 @@ namespace System.Text.Json
     /// </summary>
     public sealed class JsonString : JsonNode, IEquatable<JsonString>
     {
+        private const string s_dateTimeFormatString = "O";
+
         private string _value;
 
         /// <summary>
@@ -46,7 +48,7 @@ namespace System.Text.Json
         /// <exception cref="ArgumentOutOfRangeException">
         ///   The date and time is outside the range of dates supported by the calendar used by the invariant culture.
         /// </exception>
-        public JsonString(DateTime value) => Value = value.ToString("s", CultureInfo.InvariantCulture);
+        public JsonString(DateTime value) => Value = value.ToString(s_dateTimeFormatString, CultureInfo.InvariantCulture);
 
         /// <summary>
         ///  Initializes a new instance of the <see cref="JsonString"/> with an ISO 8601 representation of the <see cref="DateTimeOffset"/> structure.
@@ -55,7 +57,7 @@ namespace System.Text.Json
         /// <exception cref="ArgumentOutOfRangeException">
         ///   The date and time is outside the range of dates supported by the calendar used by the invariant culture.
         /// </exception>
-        public JsonString(DateTimeOffset value) => Value = value.ToString("s", CultureInfo.InvariantCulture);
+        public JsonString(DateTimeOffset value) => Value = value.ToString(s_dateTimeFormatString, CultureInfo.InvariantCulture);
 
         /// <summary>
         ///   Gets or sets the text value represented by the instance.
@@ -82,7 +84,7 @@ namespace System.Text.Json
         /// <exception cref="FormatException">
         ///   Text value of this instance is not in an ISO 8601 defined DateTime format.
         /// </exception>
-        public DateTime GetDateTime() => DateTime.ParseExact(_value, "s", CultureInfo.InvariantCulture);
+        public DateTime GetDateTime() => DateTime.ParseExact(_value, s_dateTimeFormatString, CultureInfo.InvariantCulture);
 
         /// <summary>
         ///   Converts the ISO 8601 text value of this instance to <see cref="DateTimeOffset"/> equivalent.
@@ -91,7 +93,7 @@ namespace System.Text.Json
         /// <exception cref="FormatException">
         ///   Text value of this instance is not in an ISO 8601 defined DateTimeOffset format.
         /// </exception>
-        public DateTimeOffset GetDateTimeOffset() => DateTimeOffset.ParseExact(_value, "s", CultureInfo.InvariantCulture);
+        public DateTimeOffset GetDateTimeOffset() => DateTimeOffset.ParseExact(_value, s_dateTimeFormatString, CultureInfo.InvariantCulture);
 
         /// <summary>
         ///   Converts the text value of this instance to its <see cref="Guid"/> equivalent.
@@ -114,7 +116,7 @@ namespace System.Text.Json
         ///  <see langword="true"/> if instance was converted successfully;
         ///  otherwise, <see langword="false"/>
         /// </returns>
-        public bool TryGetDateTime(out DateTime value) => DateTime.TryParseExact(_value, "s", CultureInfo.InvariantCulture, DateTimeStyles.None, out value);
+        public bool TryGetDateTime(out DateTime value) => DateTime.TryParseExact(_value, s_dateTimeFormatString, CultureInfo.InvariantCulture, DateTimeStyles.None, out value);
 
         /// <summary>
         ///   Converts the ISO 8601 text value of this instance to its <see cref="DateTimeOffset"/> equivalent.
@@ -128,7 +130,7 @@ namespace System.Text.Json
         ///  <see langword="true"/> if instance was converted successfully;
         ///  otherwise, <see langword="false"/>
         /// </returns>
-        public bool TryGetDateTimeOffset(out DateTimeOffset value) => DateTimeOffset.TryParseExact(_value, "s", CultureInfo.InvariantCulture, DateTimeStyles.None, out value);
+        public bool TryGetDateTimeOffset(out DateTimeOffset value) => DateTimeOffset.TryParseExact(_value, s_dateTimeFormatString, CultureInfo.InvariantCulture, DateTimeStyles.None, out value);
 
         /// <summary>
         ///   Converts the text value of this instance to its <see cref="Guid"/> equivalent.
